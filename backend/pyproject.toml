@@ -1,0 +1,41 @@
+[project]
+name = "interview-copilot-backend"
+version = "0.1.0"
+description = "RAG agentic backend for Interview Copilot — LangGraph + LangChain + DSPy + ChromaDB"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # --- API server ---
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "python-dotenv>=1.0",
+    "pydantic>=2.7",
+
+    # --- Agentic workflow ---
+    "langgraph>=0.2.60",
+    "langchain>=0.3.14",
+    "langchain-core>=0.3.29",
+    "langchain-community>=0.3.14",
+
+    # --- LLM providers (free tiers) ---
+    "langchain-google-genai>=2.0.8",   # Gemini chat + embeddings (generous free tier)
+    "langchain-groq>=0.2.3",           # Groq free tier
+    "langchain-openai>=0.3.0",         # used for OpenRouter (OpenAI-compatible)
+
+    # --- DSPy (structured prediction / intent routing) ---
+    "dspy>=2.6.0",
+
+    # --- Vector store ---
+    "langchain-chroma>=0.1.4",
+    "chromadb>=0.5.18",
+
+    # --- Document parsing ---
+    "pypdf>=5.1",
+    "python-docx>=1.1.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8",
+]
