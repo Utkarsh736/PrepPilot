@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* ------------------------------------------------------------------
+     Prep Pilot — "quiet cockpit"
+     warm paper, warm ink, hairline rules, one clearance green.
+     no gradients, no glow, no glass. restraint is the identity.
+  ------------------------------------------------------------------ */
+  --background: oklch(0.983 0.004 95);        /* warm paper            */
+  --foreground: oklch(0.26 0.008 85);         /* warm ink              */
+  --card: oklch(1 0 0);                        /* raised sheet          */
+  --card-foreground: oklch(0.26 0.008 85);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.26 0.008 85);
+  --primary: oklch(0.43 0.085 160);           /* clearance green       */
+  --primary-foreground: oklch(0.98 0.005 95);
+  --secondary: oklch(0.955 0.005 95);         /* warm gray fill        */
+  --secondary-foreground: oklch(0.3 0.01 85);
+  --muted: oklch(0.955 0.005 95);
+  --muted-foreground: oklch(0.5 0.015 85);    /* warm gray text        */
+  --accent: oklch(0.94 0.012 95);
+  --accent-foreground: oklch(0.3 0.01 85);
+  --destructive: oklch(0.5 0.18 28);
+  --border: oklch(0.915 0.008 90);            /* warm hairline         */
+  --input: oklch(0.915 0.008 90);
+  --ring: oklch(0.43 0.085 160);
+  --chart-1: oklch(0.43 0.085 160);
+  --chart-2: oklch(0.62 0.12 70);
+  --chart-3: oklch(0.55 0.11 200);
+  --chart-4: oklch(0.52 0.13 30);
+  --chart-5: oklch(0.72 0.05 95);
+  --sidebar: oklch(0.968 0.005 95);           /* chart-paper sidebar   */
+  --sidebar-foreground: oklch(0.26 0.008 85);
+  --sidebar-primary: oklch(0.43 0.085 160);
+  --sidebar-primary-foreground: oklch(0.98 0.005 95);
+  --sidebar-accent: oklch(0.94 0.012 95);
+  --sidebar-accent-foreground: oklch(0.3 0.01 85);
+  --sidebar-border: oklch(0.9 0.008 90);
+  --sidebar-ring: oklch(0.43 0.085 160);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: oklch(0.43 0.085 160 / 0.16);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Prep Pilot custom styles                                            */
+/* ------------------------------------------------------------------ */
+
+/* mono instrument micro-label (the design system's smallest unit) */
+.pp-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: oklch(0.5 0.015 85);
+}
+
+/* slim scrollbars everywhere inside the app */
+.pp-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.pp-scroll::-webkit-scrollbar-thumb {
+  background: oklch(0.72 0.01 85 / 0.55);
+  border-radius: 999px;
+}
+.pp-scroll::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.62 0.01 85 / 0.7);
+}
+.pp-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* pulsing dot for "agents working" indicator */
+@keyframes pp-pulse-dot {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.pp-dot {
+  animation: pp-pulse-dot 1.2s ease-in-out infinite;
+}
+
+/* caret blink for the typewriter reveal */
+@keyframes pp-caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.pp-caret::after {
+  content: "▍";
+  animation: pp-caret 0.9s step-end infinite;
+  margin-left: 1px;
+  color: oklch(0.43 0.085 160);
+}
+
+/* slow drift for the hero flight-path plane */
+@keyframes pp-cruise {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(6px, -4px) rotate(2deg);
+  }
+}
+.pp-cruise {
+  animation: pp-cruise 7s ease-in-out infinite;
+}
+
+/* markdown body defaults (light, paper surfaces) */
+.pp-markdown > *:first-child {
+  margin-top: 0;
+}
+.pp-markdown > *:last-child {
+  margin-bottom: 0;
+}
+.pp-markdown h1,
+.pp-markdown h2,
+.pp-markdown h3 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 1rem 0 0.5rem;
+  color: oklch(0.26 0.008 85);
+}
+.pp-markdown h1 {
+  font-size: 1.15rem;
+}
+.pp-markdown h2 {
+  font-size: 1.05rem;
+}
+.pp-markdown h3 {
+  font-size: 0.95rem;
+}
+.pp-markdown p {
+  margin: 0.55rem 0;
+}
+.pp-markdown ul,
+.pp-markdown ol {
+  margin: 0.55rem 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pp-markdown ul {
+  list-style: disc;
+}
+.pp-markdown ol {
+  list-style: decimal;
+}
+.pp-markdown li::marker {
+  color: oklch(0.43 0.085 160);
+}
+.pp-markdown a {
+  color: oklch(0.38 0.08 160);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pp-markdown code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.85em;
+  background: oklch(0.955 0.005 95);
+  border: 1px solid oklch(0.915 0.008 90);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.375rem;
+}
+/* code blocks stay dark — an ink well on the page, like a printed listing */
+.pp-markdown pre {
+  background: oklch(0.27 0.008 85);
+  color: oklch(0.93 0.005 95);
+  border: 1px solid oklch(0.34 0.01 85);
+  border-radius: 0.5rem;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  margin: 0.65rem 0;
+}
+.pp-markdown pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.pp-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.65rem 0;
+  font-size: 0.85rem;
+}
+.pp-markdown th,
+.pp-markdown td {
+  border: 1px solid oklch(0.9 0.008 90);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+.pp-markdown th {
+  background: oklch(0.955 0.005 95);
+  font-weight: 600;
+}
+.pp-markdown blockquote {
+  border-left: 3px solid oklch(0.43 0.085 160 / 0.55);
+  padding-left: 0.85rem;
+  margin: 0.65rem 0;
+  color: oklch(0.5 0.015 85);
+}
+.pp-markdown strong {
+  color: oklch(0.26 0.008 85);
+  font-weight: 600;
+}
+.pp-markdown hr {
+  border-color: oklch(0.915 0.008 90);
+  margin: 1rem 0;
+}
