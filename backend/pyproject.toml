@@ -1,6 +1,6 @@
 [project]
 name = "preppilot-backend"
-version = "0.1.0"
+version = "0.3.0"
 description = "RAG agentic backend for Prep Pilot — LangGraph + LangChain + DSPy + ChromaDB"
 readme = "README.md"
 requires-python = ">=3.11"

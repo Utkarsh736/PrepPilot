@@ -33,7 +33,7 @@ from app.rag.store import VectorStore, embedding_info, prewarm_local_embeddings
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("interview-copilot")
 
-app = FastAPI(title="Prep Pilot Backend", version="0.1.0")
+app = FastAPI(title="Prep Pilot Backend", version="0.3.0")
 
 app.add_middleware(
     CORSMiddleware,
