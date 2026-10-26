@@ -1,0 +1,42 @@
+[
+  {
+    "question_id": "hr_conflict",
+    "question": "Tell me about a time you handled conflict on a team.",
+    "answer_text": "At my previous company in 2023, two senior engineers disagreed on API design. I was tasked with unblocking the release. I scheduled a design review, wrote a decision doc comparing options with latency and complexity trade-offs, and facilitated a vote. We shipped on time and reduced P99 latency by 18%.",
+    "human_label": "strong",
+    "human_rationale": "Clear STAR: situation, task, concrete actions, quantified result.",
+    "smoke": true
+  },
+  {
+    "question_id": "hr_conflict",
+    "question": "Tell me about a time you handled conflict on a team.",
+    "answer_text": "There was some conflict and I talked to people and it got better.",
+    "human_label": "weak",
+    "human_rationale": "No specifics, no actions, no outcome metrics.",
+    "smoke": true
+  },
+  {
+    "question_id": "hr_conflict",
+    "question": "Tell me about a time you handled conflict on a team.",
+    "answer_text": "On a product team, designers and engineers argued about scope. I listened to both sides and proposed a phased rollout so we could ship the core path first.",
+    "human_label": "medium",
+    "human_rationale": "Has situation and action but thin on personal ownership and measurable result.",
+    "smoke": true
+  },
+  {
+    "question_id": "tech_tradeoff",
+    "question": "Describe a technical trade-off you made recently.",
+    "answer_text": "We needed faster writes. I chose eventual consistency with a write-ahead log over strong consistency, implemented dual-write with idempotency keys, and cut p95 write latency from 240ms to 45ms while accepting a 2s read lag for non-critical dashboards.",
+    "human_label": "strong",
+    "human_rationale": "Specific trade-off, implementation detail, metrics.",
+    "smoke": true
+  },
+  {
+    "question_id": "tech_tradeoff",
+    "question": "Describe a technical trade-off you made recently.",
+    "answer_text": "I picked a database that seemed fine.",
+    "human_label": "weak",
+    "human_rationale": "No trade-off articulated.",
+    "smoke": true
+  }
+]

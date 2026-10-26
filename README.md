@@ -151,3 +151,42 @@ MIT (or your preferred license — update as needed).
 ---
 
 Built for job seekers who want realistic practice, not generic chat.
+
+
+---
+
+## Development & quality gates
+
+### Demo Mode (zero keys)
+
+Every backend endpoint and the full LangGraph pipeline run without API keys.
+Unit tests, the eval smoke suite, and `docker compose up` all default to Demo Mode.
+
+### Tests
+
+```bash
+cd backend
+uv sync --group dev
+uv run pytest -q
+uv run python evals_runner.py --smoke   # router + state machine + heuristic agreement
+```
+
+### Docker
+
+```bash
+docker compose up --build
+# frontend http://localhost:3000  ·  backend http://localhost:8000
+```
+
+### CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every push:
+- backend: ruff, pytest (demo mode), eval smoke gate
+- frontend: install, lint, production build
+
+No secrets required for the default gate.
+
+### Productionization roadmap
+
+See the Milestone A–D plan (eval harness → packaging → observability → CI).
+Baseline tag: `v0.3.0-baseline`. Active work lives on `productionization`.

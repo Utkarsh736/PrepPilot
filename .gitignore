@@ -56,3 +56,7 @@ test
 prompt
 db/
 prisma/
+
+# Eval outputs (datasets stay tracked)
+evals/results/
+backend/data/

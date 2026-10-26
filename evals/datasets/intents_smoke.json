@@ -1,0 +1,17 @@
+[
+  {"utterance": "Start an HR round", "expected_intent": "interview", "expected_subtype": "hr", "tricky": false, "smoke": true},
+  {"utterance": "Let's do a technical interview", "expected_intent": "interview", "expected_subtype": "technical", "tricky": false, "smoke": true},
+  {"utterance": "Quiz me on coding algorithms", "expected_intent": "interview", "expected_subtype": "coding", "tricky": false, "smoke": true},
+  {"utterance": "Culture fit practice please", "expected_intent": "interview", "expected_subtype": "culture_fit", "tricky": false, "smoke": true},
+  {"utterance": "Tailor my resume for this job", "expected_intent": "resume", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "Please review my resume draft", "expected_intent": "critique", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "How do I negotiate salary?", "expected_intent": "general", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "What should I wear to an interview?", "expected_intent": "general", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "Begin a behavioral screening", "expected_intent": "interview", "expected_subtype": "hr", "tricky": false, "smoke": true},
+  {"utterance": "Optimize my CV for the JD", "expected_intent": "resume", "expected_subtype": "", "tricky": true, "smoke": true},
+  {"utterance": "Score this resume and give feedback", "expected_intent": "critique", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "Practice system design with me", "expected_intent": "interview", "expected_subtype": "technical", "tricky": true, "smoke": true},
+  {"utterance": "hello", "expected_intent": "general", "expected_subtype": "", "tricky": false, "smoke": true},
+  {"utterance": "Ask me LeetCode-style questions", "expected_intent": "interview", "expected_subtype": "coding", "tricky": false, "smoke": true},
+  {"utterance": "Help me rewrite my resume bullets", "expected_intent": "resume", "expected_subtype": "", "tricky": true, "smoke": true}
+]
