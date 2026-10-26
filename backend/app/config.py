@@ -136,3 +136,28 @@ DOC_TYPES = ("resume", "job_description", "work_experience", "education", "other
 
 # Interview types supported by the coach agents
 INTERVIEW_TYPES = ("hr", "technical", "coding", "culture_fit")
+
+
+def _parse_cors_origins(raw: str) -> list[str]:
+    """Comma-separated origins, or * for allow-all (dev default)."""
+    raw = (raw or "").strip()
+    if not raw or raw == "*":
+        return ["*"]
+    return [o.strip() for o in raw.split(",") if o.strip()]
+
+
+def cors_origins() -> list[str]:
+    return _parse_cors_origins(_env("CORS_ORIGINS", "*"))
+
+
+def max_upload_bytes() -> int:
+    raw = _env("MAX_UPLOAD_BYTES")
+    if not raw:
+        return 8 * 1024 * 1024  # 8 MB default
+    try:
+        return max(1024, int(raw))
+    except ValueError:
+        return 8 * 1024 * 1024
+
+
+ALLOWED_UPLOAD_EXTENSIONS = {".pdf", ".docx", ".txt", ".md", ".markdown"}

@@ -19,38 +19,54 @@ import asyncio
 import logging
 import time
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from app.agents.graph import copilot_graph
-from app.config import DOC_TYPES, INTERVIEW_TYPES, settings
+from app.config import (
+    DOC_TYPES,
+    INTERVIEW_TYPES,
+    cors_origins,
+    max_upload_bytes,
+    settings,
+)
 from app.llm import llm_info
 from app.rag import sessions as sess
 from app.rag.parser import ParseError, parse_pasted_text, parse_upload
 from app.rag.store import VectorStore, embedding_info, prewarm_local_embeddings
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
-log = logging.getLogger("interview-copilot")
+log = logging.getLogger("preppilot")
 
-app = FastAPI(title="Prep Pilot Backend", version="0.3.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    mode = "AI providers active" if settings.any_key_configured else "DEMO MODE (no API keys)"
+    emb = embedding_info()
+    log.info(
+        "Prep Pilot backend up — %s | default=%s | embeddings=%s | cors=%s",
+        mode,
+        settings.active_provider,
+        emb.get("provider"),
+        cors_origins(),
+    )
+    prewarm_local_embeddings()
+    yield
+    log.info("Prep Pilot backend shutting down")
+
+
+app = FastAPI(title="Prep Pilot Backend", version="0.3.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # gateway is same-origin; this enables local dev too
+    allow_origins=cors_origins(),
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-async def _startup() -> None:
-    mode = "AI providers active" if settings.any_key_configured else "DEMO MODE (no API keys)"
-    log.info("Prep Pilot backend up — %s | default=%s | embeddings=%s",
-             mode, settings.active_provider, embedding_info()["provider"])
-    # warm the local embedding model in the background so first upload is fast
-    prewarm_local_embeddings()
 
 
 # =====================================================================
@@ -179,6 +195,12 @@ async def upload_document(
         raise HTTPException(400, "No file provided (send multipart 'file' or use /api/documents/text)")
 
     data = await file.read()
+    limit = max_upload_bytes()
+    if len(data) > limit:
+        raise HTTPException(
+            413,
+            f"File too large ({len(data)} bytes). Maximum is {limit} bytes.",
+        )
     try:
         parsed = parse_upload(file.filename, data)
     except ParseError as e:
