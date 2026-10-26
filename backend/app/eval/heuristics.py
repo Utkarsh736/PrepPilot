@@ -33,7 +33,7 @@ _STAR_SIGNALS = {
     "action": [
         r"\b(i (built|led|designed|implemented|created|migrated|refactored|"
         r"proposed|wrote|automated|negotiated|debugged|shipped|launched|"
-        r"mentored|owned|drove|architected|optimized|delivered))",
+        r"mentored|owned|drove|architected|optimized|delivered|scheduled|facilitated))",
         r"\b(my approach|i decided|i started by)",
     ],
     "result": [
