@@ -51,7 +51,8 @@ local-*
 .zscripts/
 worklog.md
 mini-services/
-db/*.db
 /skills/
 test
 prompt
+db/
+prisma/
